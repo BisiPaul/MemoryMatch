@@ -10,9 +10,11 @@ import com.bistronic.memorymatchwevideo.R
  * Created by paulbisioc on 11/30/2020.
  */
 
-class CardsAdapter(private val listener: OnCardClickedListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CardsAdapter(private val listener: OnCardClickedListener) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var cards: ArrayList<Card> = ArrayList()
 
+    // The clicks from the Cards return here and are retained in these 2 variables
     private var adapterSelectedCard_1: Pair<Card?, Int?>? = null
     private var adapterSelectedCard_2: Pair<Card?, Int?>? = null
 
@@ -43,14 +45,6 @@ class CardsAdapter(private val listener: OnCardClickedListener) : RecyclerView.A
         }
     }
 
-    fun hideAllCards() {
-        cards.forEach { card ->
-            if (card.cardState != CardState.FOUND)
-                card.cardState = CardState.NOT_FOUND
-        }
-        notifyDataSetChanged()
-    }
-
     fun hideFaceUpCards(card1: Card, card2: Card) {
         (cards.find { card -> card == card1 }).let {
             it?.cardState = CardState.NOT_FOUND
@@ -71,19 +65,8 @@ class CardsAdapter(private val listener: OnCardClickedListener) : RecyclerView.A
         }
     }
 
-    fun resetCardsState() {
-        for(i in 0 until cards.size) {
-            if(cards[i].cardState != CardState.NOT_FOUND) {
-                cards[i].cardState = CardState.NOT_FOUND
-            }
-            notifyItemChanged(i)
-        }
-    }
-
-    fun shuffleCards() {
-        cards.shuffle()
-    }
-
+    // Method that links the CardsAdapter and the CardViewHolders
+    // It gets as a parameter a pair made up by the Card and it's position in the adapter.
     fun performCardClickAdapter(clickedCard: Pair<Card?, Int>) {
         when {
             adapterSelectedCard_1 == null -> {
@@ -105,7 +88,7 @@ class CardsAdapter(private val listener: OnCardClickedListener) : RecyclerView.A
         adapterSelectedCard_2 = null
     }
 
-    fun canCardsBeClicked() : Boolean {
+    fun canCardsBeClicked(): Boolean {
         return adapterSelectedCard_1 == null || adapterSelectedCard_2 == null
     }
 }

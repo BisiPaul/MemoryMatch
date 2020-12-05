@@ -27,11 +27,6 @@ class ScoreboardViewModel(
 
     fun getAllScores() = allScores
 
-    fun forceGetScores() {
-        repository.forceGet()
-        allScores.addSource(repository.allScores, allScores::setValue)
-    }
-
     fun insert(obj: Score) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insert(obj)

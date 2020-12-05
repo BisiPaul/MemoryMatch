@@ -13,16 +13,11 @@ import kotlinx.coroutines.withContext
  */
 class ScoresRoomRepository(database: AppDatabase) {
 
-    private val scoreboardDao: ScoreboardDao
+    private val scoreboardDao: ScoreboardDao = database.scoreboardDao()
 
     var allScores: LiveData<List<Score>>
 
     init {
-        scoreboardDao = database.scoreboardDao()
-        allScores = scoreboardDao.getAll()
-    }
-
-    fun forceGet() {
         allScores = scoreboardDao.getAll()
     }
 

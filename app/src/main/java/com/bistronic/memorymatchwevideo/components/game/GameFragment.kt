@@ -136,13 +136,16 @@ class GameFragment : Fragment(), OnCardClickedListener {
     }
 
     override fun performCardClick(clickedCard: Pair<Card?, Int>?) {
+        // Keep track of the selected cards
         if (viewModel.selectedCard_1 == null)
             viewModel.selectedCard_1 = clickedCard
         else
             viewModel.selectedCard_2 = clickedCard
 
+        // Wait until you have 2 cards selected
         viewModel.selectedCard_1?.let { card_1 ->
             viewModel.selectedCard_2?.let { card_2 ->
+                // If the cards have the same image and different ids, you got a match
                 if (card_1.first?.image == card_2.first?.image && card_1.first?.id != card_2.first?.id) {
                     card_1.first?.let {
                         card_2.first?.let { it1 ->
@@ -162,8 +165,9 @@ class GameFragment : Fragment(), OnCardClickedListener {
                     viewModel.resetSelectedCards()
                     viewModel.increaseMatchesNumber()
                 } else {
+                    // Apply a delay before turning face down cards that do not match
                     coroutineDelay(1000) {
-                        card_2.first?.let {
+                        card_2.first?.let { it ->
                             card_1.first?.let { it1 ->
                                 cardsAdapter.hideFaceUpCards(
                                     it1, it

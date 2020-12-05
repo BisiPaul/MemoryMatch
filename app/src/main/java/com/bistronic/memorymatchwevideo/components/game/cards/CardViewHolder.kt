@@ -11,7 +11,11 @@ import com.bumptech.glide.request.RequestOptions
 /**
  * Created by paulbisioc on 11/30/2020.
  */
-class CardViewHolder(val binding: ItemCardBinding, val listener: OnCardClickedListener, val adapter: CardsAdapter) :
+class CardViewHolder(
+    val binding: ItemCardBinding,
+    val listener: OnCardClickedListener,
+    val adapter: CardsAdapter
+) :
     RecyclerView.ViewHolder(binding.root) {
     private var mCard: Card? = null
     private val mAdapter: CardsAdapter = adapter
@@ -23,21 +27,22 @@ class CardViewHolder(val binding: ItemCardBinding, val listener: OnCardClickedLi
 
     private fun setControls() {
         itemView.setOnClickListener {
-            if(mAdapter.canCardsBeClicked())
-            when (mCard?.cardState) {
-                CardState.FACE_UP -> {
-                    mCard?.cardState = CardState.NOT_FOUND
-                    setImage()
+            // This blocks the user from clicking other Cards while there are 2 cards already selected
+            if (mAdapter.canCardsBeClicked())
+                when (mCard?.cardState) {
+                    CardState.FACE_UP -> {
+                        mCard?.cardState = CardState.NOT_FOUND
+                        setImage()
+                    }
+                    CardState.NOT_FOUND -> {
+                        mCard?.cardState = CardState.FACE_UP
+                        setImage()
+                        mAdapter.performCardClickAdapter(Pair(mCard, adapterPosition))
+                    }
+                    CardState.FOUND -> {
+                        // do nothing when user clicks an already found card
+                    }
                 }
-                CardState.NOT_FOUND -> {
-                    mCard?.cardState = CardState.FACE_UP
-                    setImage()
-                    mAdapter.performCardClickAdapter(Pair(mCard, adapterPosition))
-                }
-                CardState.FOUND -> {
-                    // do nothing when user clicks an already found card
-                }
-            }
         }
     }
 
@@ -50,6 +55,7 @@ class CardViewHolder(val binding: ItemCardBinding, val listener: OnCardClickedLi
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .apply(RequestOptions().placeholder(R.drawable.ic_wevideo_logo))
                     .into(binding.cardImageIV)
+                // Set a gray color filter over the already found Cards
                 binding.cardImageIV.setColorFilter(Color.GRAY)
             }
             CardState.NOT_FOUND -> {

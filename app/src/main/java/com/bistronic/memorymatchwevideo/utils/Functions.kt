@@ -41,14 +41,6 @@ suspend fun <T> runApiCall(call: suspend () -> Response<T>): RequestResponse<T> 
     }
 
 // Delay block of code with coroutines - way way better and safer than Handler().postDelayed()
-fun AppCompatActivity.coroutineDelay(timeInMills: Long, callback: suspend () -> Unit) {
-    this.lifecycleScope.launch {
-        delay(timeInMills)
-        callback.invoke()
-    }
-}
-
-// Delay block of code with coroutines - way way better and safer than Handler().postDelayed()
 fun Fragment.coroutineDelay(timeInMills: Long, callback: suspend () -> Unit) {
     this.lifecycleScope.launch {
         delay(timeInMills)

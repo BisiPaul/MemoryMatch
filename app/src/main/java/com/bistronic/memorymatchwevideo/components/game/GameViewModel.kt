@@ -168,6 +168,7 @@ class GameViewModel(
     }
 
     companion object {
+        // This is the value from where the timer starts the countdown
         const val INITIAL_TIME = 60
     }
 }
