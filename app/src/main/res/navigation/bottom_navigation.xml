@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_game">
+
+    <fragment
+        android:id="@+id/navigation_game"
+        android:name="com.bistronic.memorymatchwevideo.components.game.GameFragment"
+        android:label="@string/title_game"
+        tools:layout="@layout/fragment_game">
+
+        <action
+            android:id="@+id/action_navigation_game_to_navigation_scoreboard"
+            app:destination="@id/navigation_scoreboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_scoreboard"
+        android:name="com.bistronic.memorymatchwevideo.components.scoreboard.ScoreboardFragment"
+        android:label="@string/title_scoreboard"
+        tools:layout="@layout/fragment_scoreboard">
+        <argument
+            android:name="bundle_key_score"
+            app:argType="integer" />
+        <argument
+            android:name="bundle_key_game_type"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.bistronic.memorymatchwevideo.components.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+
+</navigation>

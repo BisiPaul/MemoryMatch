@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="globalMargin">10dp</dimen>
+
+    <dimen name="textSizeLarge">40sp</dimen>
+    <dimen name="textSizeMedium">20sp</dimen>
+
+</resources>
